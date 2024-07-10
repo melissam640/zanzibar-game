@@ -1,0 +1,9 @@
+header {
+    background-image: url("../assets/wood-texture.jpg");
+    background-position-y: top;
+    background-size: cover;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
