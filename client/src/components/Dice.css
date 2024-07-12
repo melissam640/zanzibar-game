@@ -1,0 +1,11 @@
+.Dice-section {
+  position: absolute;
+  top: 50%;
+  overflow: auto;
+}
+
+.Die {
+  display: inline;
+  margin: 2%;
+  width: 10%;
+}

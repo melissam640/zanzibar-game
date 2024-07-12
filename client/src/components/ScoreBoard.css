@@ -1,21 +1,29 @@
+.Score-board-section {
+  width: 100%;
+}
+
 .Score-board-frame {
-    background-image: url("../assets/wood-texture.jpg");
-    height: 100%;
-    width: 20%;
-    margin: 5%;
-    margin-top: 10%;
-    padding: 1%;
-    border-radius: 5%;
+  background-image: url("../assets/wood-texture.jpg");
+  height: 100%;
+  width: 20%;
+  margin: 5%;
+  margin-top: 10%;
+  padding: 1%;
+  border-radius: 5%;
 }
 
 .Score-board {
-    background-color: rgb(133, 76, 29);
-    height: 100%;
-    width: 100%;
-    padding: 5%;
-    border-radius: 5%;
+  background-color: rgb(133, 76, 29);
+  height: 100%;
+  width: 100%;
+  padding: 5%;
+  border-radius: 5%;
 }
 
-.Right-aligned {
-    float: right;
+.Right {
+  float: right;
+}
+
+.Left {
+  float: left;
 }
