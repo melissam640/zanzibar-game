@@ -2,7 +2,7 @@ import "./Dice.css";
 
 const Dice = (props) => {
     return (
-      <div className="Dice-section">
+      <div className="Dice-section" style={props.style}>
         <img className="Die" src={props.die1} />
         <img className="Die" src={props.die2} />
         <img className="Die" src={props.die3} />
