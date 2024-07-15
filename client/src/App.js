@@ -16,6 +16,8 @@ import four from "./assets/dice-four.png";
 import five from "./assets/dice-five.png";
 import six from "./assets/dice-six.png";
 
+const diceImages = [one, two, three, four, five, six];
+
 //data will be the string we send from our server
 const apiCall = () => {
   axios.get('http://localhost:8080').then((data) => {
@@ -26,17 +28,29 @@ const apiCall = () => {
 
 function App() {
   const [diceDisplay, setDiceDisplay] = useState("none");
+  const [diceValues, setDiceValues] = useState([1, 1, 1]);
 
-  const rollDice = () => {
-    setDiceDisplay("");
-    console.log("Roll button triggered")
+  const rollDice = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/roll-dice');
+      setDiceValues(response.data);
+      setDiceDisplay("");
+      console.log("Roll button triggered", response.data);
+    } catch (error) {
+      console.error("Error rolling dice:", error);
+    }
   }
 
   return (
     <div className="App">
       <Header />
       <ScoreBoard compTokens="10" userTokens="10" />
-      <Dice die1={one} die2={two} die3={three} style={{display: diceDisplay}}/>
+      <Dice
+        die1={diceImages[diceValues[0] - 1]}
+        die2={diceImages[diceValues[1] - 1]}
+        die3={diceImages[diceValues[2] - 1]}
+        style={{display: diceDisplay}}
+      />
       <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
     </div>
   );
