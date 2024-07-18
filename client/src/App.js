@@ -29,6 +29,7 @@ const apiCall = () => {
 function App() {
   const [diceDisplay, setDiceDisplay] = useState("none");
   const [diceValues, setDiceValues] = useState([1, 1, 1]);
+  const [points, setPoints] = useState(0);
 
   const rollDice = async () => {
     try {
@@ -38,6 +39,18 @@ function App() {
       console.log("Roll button triggered", response.data);
     } catch (error) {
       console.error("Error rolling dice:", error);
+    }
+  }
+
+  const getPoints = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/get-points', {
+        data: diceValues
+      });
+      setPoints(response.data);
+      console.log('Data sent:', response.data);
+    } catch (error) {
+      console.error('Error sending data:', error);
     }
   }
 
@@ -51,7 +64,10 @@ function App() {
         die3={diceImages[diceValues[2] - 1]}
         style={{display: diceDisplay}}
       />
+      {/* TODO: move the styling to CSS file when ready to finish styling this button */}
       <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
+      <Button onClick={getPoints} style={{top: "80%", right: "55%", position: "absolute"}}>Get Points</Button>
+      <p className='points' style={{top: "20%", right: "50%", position: "absolute"}}>{points}</p>
     </div>
   );
 }
