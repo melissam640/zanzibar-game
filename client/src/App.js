@@ -29,7 +29,9 @@ const apiCall = () => {
 function App() {
   const [diceDisplay, setDiceDisplay] = useState("none");
   const [diceValues, setDiceValues] = useState([1, 1, 1]);
-  const [points, setPoints] = useState(0);
+  const [score, setScore] = useState(0);
+  const [message, setMessage] = useState("");
+  const [tokens, setTokens] = useState(0);
 
   const rollDice = async () => {
     try {
@@ -42,12 +44,15 @@ function App() {
     }
   }
 
-  const getPoints = async () => {
+  const getScore = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/get-points', {
+      const response = await axios.post('http://localhost:8080/get-score', {
         data: diceValues
       });
-      setPoints(response.data);
+      const [score, tokensExchanged, message] = response.data;
+      setScore(score);
+      setMessage(message);
+      setTokens(tokensExchanged);
       console.log('Data sent:', response.data);
     } catch (error) {
       console.error('Error sending data:', error);
@@ -66,8 +71,10 @@ function App() {
       />
       {/* TODO: move the styling to CSS file when ready to finish styling this button */}
       <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
-      <Button onClick={getPoints} style={{top: "80%", right: "55%", position: "absolute"}}>Get Points</Button>
-      <p className='points' style={{top: "20%", right: "50%", position: "absolute"}}>{points}</p>
+      <Button onClick={getScore} style={{top: "80%", right: "55%", position: "absolute"}}>Get Points</Button>
+      <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
+      <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
+      <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokens} tokens</p>
     </div>
   );
 }

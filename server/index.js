@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { rollDice, getPointValue } = require('./helperFunctions.js');
+const { rollDice, getPointValue, getTotalScore } = require('./helperFunctions.js');
 
 app.use(cors());
 app.use(express.json());
@@ -16,14 +16,15 @@ app.get('/roll-dice', (req, res) => {
   res.json(diceResults);
 });
 
-app.post('/get-points', (req, res) => {
+app.post('/get-score', (req, res) => {
   const { data } = req.body;
-  let dicePoints = 0;
-  for (let value of data) {
-    dicePoints += getPointValue(value);
-  }
-  console.log(dicePoints);
-  res.json(dicePoints);
+//   let dicePoints = 0;
+//   for (let value of data) {
+//     dicePoints += getPointValue(value);
+//   }
+  const roundScore = getTotalScore(data);
+  console.log(roundScore);
+  res.json(roundScore);
 });
 
 app.listen(8080, () => {
