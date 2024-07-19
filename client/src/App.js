@@ -25,6 +25,7 @@ function App() {
   const [userTokens, setUserTokens] = useState(10);
   const [compTokens, setCompTokens] = useState(10);
   const [tokensExchanged, setTokensExchanged] = useState(0);
+  const [showRollButton, setShowRollButton] = useState(true);
   
   const rollDice = async () => {
     try {
@@ -32,6 +33,8 @@ function App() {
       setDiceValues(response.data);
       setDiceDisplay("");
       console.log("Roll button triggered", response.data);
+      setShowRollButton(false);
+      getScore();
     } catch (error) {
       console.error("Error rolling dice:", error);
     }
@@ -63,8 +66,10 @@ function App() {
         style={{display: diceDisplay}}
       />
       {/* TODO: move the styling to CSS file when ready to finish styling this button */}
-      <Button onClick={getScore} style={{top: "80%", right: "55%", position: "absolute"}}>Get Points</Button>
-      <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
+      <Button style={{top: "80%", right: "50%", position: "absolute"}}>Continue</Button>
+      {showRollButton && (
+        <Button onClick={rollDice} style={{top: "80%", right: "50%", position: "absolute"}}>Roll Dice</Button>
+      )}
       <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
       <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
       <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensExchanged} tokens</p>

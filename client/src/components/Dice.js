@@ -13,9 +13,9 @@ const diceImages = [one, two, three, four, five, six];
 const Dice = (props) => {
     return (
       <div className="Dice-section" style={props.style}>
-        <img className="Die" src={diceImages[props.dieValue - 1]} />
-        <img className="Die" src={diceImages[props.dieValue - 1]} />
-        <img className="Die" src={diceImages[props.dieValue - 1]} />
+        <img className="Die" src={diceImages[props.dieValue1 - 1]} />
+        <img className="Die" src={diceImages[props.dieValue2 - 1]} />
+        <img className="Die" src={diceImages[props.dieValue3 - 1]} />
       </div>
     );
   }

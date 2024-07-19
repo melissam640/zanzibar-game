@@ -18,10 +18,6 @@ app.get('/roll-dice', (req, res) => {
 
 app.post('/get-score', (req, res) => {
   const { data } = req.body;
-//   let dicePoints = 0;
-//   for (let value of data) {
-//     dicePoints += getPointValue(value);
-//   }
   const roundScore = getTotalScore(data);
   console.log(roundScore);
   res.json(roundScore);
