@@ -8,16 +8,6 @@ import Header from './components/Header.js';
 import ScoreBoard from './components/ScoreBoard.js';
 import Dice from './components/Dice.js';
 
-//dice
-import one from "./assets/dice-one.png";
-import two from "./assets/dice-two.png";
-import three from "./assets/dice-three.png";
-import four from "./assets/dice-four.png";
-import five from "./assets/dice-five.png";
-import six from "./assets/dice-six.png";
-
-const diceImages = [one, two, three, four, five, six];
-
 //data will be the string we send from our server
 const apiCall = () => {
   axios.get('http://localhost:8080').then((data) => {
@@ -31,8 +21,11 @@ function App() {
   const [diceValues, setDiceValues] = useState([1, 1, 1]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
-  const [tokens, setTokens] = useState(0);
-
+  // TODO: add feature for user to specify starting tokens
+  const [userTokens, setUserTokens] = useState(10);
+  const [compTokens, setCompTokens] = useState(10);
+  const [tokensExchanged, setTokensExchanged] = useState(0);
+  
   const rollDice = async () => {
     try {
       const response = await axios.get('http://localhost:8080/roll-dice');
@@ -52,7 +45,7 @@ function App() {
       const [score, tokensExchanged, message] = response.data;
       setScore(score);
       setMessage(message);
-      setTokens(tokensExchanged);
+      setTokensExchanged(tokensExchanged);
       console.log('Data sent:', response.data);
     } catch (error) {
       console.error('Error sending data:', error);
@@ -62,19 +55,19 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <ScoreBoard compTokens="10" userTokens="10" />
+      <ScoreBoard compTokens={compTokens} userTokens={userTokens} />
       <Dice
-        die1={diceImages[diceValues[0] - 1]}
-        die2={diceImages[diceValues[1] - 1]}
-        die3={diceImages[diceValues[2] - 1]}
+        dieValue1={diceValues[0]}
+        dieValue2={diceValues[1]}
+        dieValue3={diceValues[2]}
         style={{display: diceDisplay}}
       />
       {/* TODO: move the styling to CSS file when ready to finish styling this button */}
-      <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
       <Button onClick={getScore} style={{top: "80%", right: "55%", position: "absolute"}}>Get Points</Button>
+      <Button onClick={rollDice} style={{top: "80%", right: "45%", position: "absolute"}}>Roll Dice</Button>
       <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
       <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
-      <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokens} tokens</p>
+      <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensExchanged} tokens</p>
     </div>
   );
 }
