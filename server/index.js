@@ -13,15 +13,23 @@ app.get('/', (req, res) => {
 
 app.get('/roll-dice', (req, res) => {
   const diceResults = rollDice();
+  console.log(diceResults);
   res.json(diceResults);
 });
 
 app.post('/get-score', (req, res) => {
   const { data } = req.body;
+  console.log(data);
   const roundScore = getTotalScore(data);
   console.log(roundScore);
   res.json(roundScore);
 });
+
+app.post('/get-round-winner', (req, res) => {
+  const { userScore, compScore } = req.body;
+  console.log('User score:', userScore);
+  console.log('Computer score:', compScore);
+})
 
 app.listen(8080, () => {
   console.log('server listening on port 8080')

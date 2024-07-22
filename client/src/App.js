@@ -24,8 +24,12 @@ function App() {
   // TODO: add feature for user to specify starting tokens
   const [userTokens, setUserTokens] = useState(10);
   const [compTokens, setCompTokens] = useState(10);
+  const [userScore, setUserScore] = useState(0);
+  const [compScore, setCompScore] = useState(0);
   const [tokensExchanged, setTokensExchanged] = useState(0);
   const [showRollButton, setShowRollButton] = useState(true);
+  const [showConButton, setShowConButton] = useState(false);
+  const [showEndButton, setShowEndButton] = useState(false);
   
   const rollDice = async () => {
     try {
@@ -33,23 +37,78 @@ function App() {
       setDiceValues(response.data);
       setDiceDisplay("");
       console.log("Roll button triggered", response.data);
+
       setShowRollButton(false);
-      getScore();
+      setShowConButton(true);
+      getScore(response.data);
+
     } catch (error) {
       console.error("Error rolling dice:", error);
     }
   }
 
-  const getScore = async () => {
+  const computerRoll = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/roll-dice');
+      setDiceValues(response.data);
+      console.log("Computer roll button triggered", response.data);
+
+      setShowConButton(false);
+      setShowEndButton(true);
+      getCompScore(response.data);
+
+    } catch (error) {
+      console.error("Error rolling dice:", error);
+    }
+  }
+
+  const getScore = async (values) => {
     try {
       const response = await axios.post('http://localhost:8080/get-score', {
-        data: diceValues
+        data: values
       });
       const [score, tokensExchanged, message] = response.data;
+
       setScore(score);
       setMessage(message);
       setTokensExchanged(tokensExchanged);
+      setUserScore(score);
       console.log('Data sent:', response.data);
+
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  }
+
+  const getCompScore = async (values) => {
+    try {
+      const response = await axios.post('http://localhost:8080/get-score', {
+        data: values
+      });
+      const [score, tokensExchanged, message] = response.data;
+
+      setScore(score);
+      setMessage(message);
+      setTokensExchanged(tokensExchanged);
+      setCompScore(score);
+      console.log('Data sent:', response.data);
+
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  }
+
+  const endRound = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/get-round-winner', {
+        userScore: userScore,
+        compScore: compScore
+      });
+
+      console.log('User score:', userScore);
+      console.log('Computer score:', compScore);
+      console.log('Data sent:', response.data);
+
     } catch (error) {
       console.error('Error sending data:', error);
     }
@@ -66,9 +125,14 @@ function App() {
         style={{display: diceDisplay}}
       />
       {/* TODO: move the styling to CSS file when ready to finish styling this button */}
-      <Button style={{top: "80%", right: "50%", position: "absolute"}}>Continue</Button>
       {showRollButton && (
         <Button onClick={rollDice} style={{top: "80%", right: "50%", position: "absolute"}}>Roll Dice</Button>
+      )}
+      {showConButton && (
+        <Button onClick={computerRoll} style={{top: "80%", right: "50%", position: "absolute"}}>Continue</Button>
+      )}
+      {showEndButton && (
+        <Button onClick={endRound} style={{top: "80%", right: "50%", position: "absolute"}}>End Round</Button>
       )}
       <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
       <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
