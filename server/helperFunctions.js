@@ -44,7 +44,18 @@ const getTotalScore = (diceValues) => {
   return [score, tokensExchanged, message];
 }
 
+const getRoundWinner = (userScore, compScore) => {
+  if (userScore > compScore) {
+    return ('User wins round.');
+  } else if (compScore > userScore) {
+    return ('Computer wins round.');
+  } else {
+    return (`It's a TimeRanges.`);
+  }
+}
+
 module.exports = {
   rollDice,
   getTotalScore,
+  getRoundWinner,
 };

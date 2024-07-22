@@ -21,6 +21,7 @@ function App() {
   const [diceValues, setDiceValues] = useState([1, 1, 1]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
+  const [winnerMessage, setWinnerMessage] = useState("");
   // TODO: add feature for user to specify starting tokens
   const [userTokens, setUserTokens] = useState(10);
   const [compTokens, setCompTokens] = useState(10);
@@ -104,7 +105,7 @@ function App() {
         userScore: userScore,
         compScore: compScore
       });
-
+      setWinnerMessage(response.data);
       console.log('User score:', userScore);
       console.log('Computer score:', compScore);
       console.log('Data sent:', response.data);
@@ -134,6 +135,7 @@ function App() {
       {showEndButton && (
         <Button onClick={endRound} style={{top: "80%", right: "50%", position: "absolute"}}>End Round</Button>
       )}
+      <p style={{top: "15%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{winnerMessage}</p>
       <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
       <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
       <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensExchanged} tokens</p>

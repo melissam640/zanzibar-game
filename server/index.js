@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { rollDice, getPointValue, getTotalScore } = require('./helperFunctions.js');
+const { rollDice, getTotalScore, getRoundWinner } = require('./helperFunctions.js');
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +29,9 @@ app.post('/get-round-winner', (req, res) => {
   const { userScore, compScore } = req.body;
   console.log('User score:', userScore);
   console.log('Computer score:', compScore);
+  const winnerMessage = getRoundWinner(userScore, compScore);
+  console.log(winnerMessage);
+  res.json(winnerMessage);
 })
 
 app.listen(8080, () => {
