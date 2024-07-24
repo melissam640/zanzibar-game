@@ -26,12 +26,9 @@ app.post('/get-score', (req, res) => {
 });
 
 app.post('/get-round-winner', (req, res) => {
-  const { userScore, compScore } = req.body;
-  console.log('User score:', userScore);
-  console.log('Computer score:', compScore);
-  const winnerMessage = getRoundWinner(userScore, compScore);
-  console.log(winnerMessage);
-  res.json(winnerMessage);
+  const { userScore, compScore, userTokens, compTokens, userTokensExchanged, compTokensExchanged } = req.body;
+  const roundResults = getRoundWinner(userScore, compScore, userTokens, compTokens, userTokensExchanged, compTokensExchanged);
+  res.json(roundResults);
 })
 
 app.listen(8080, () => {

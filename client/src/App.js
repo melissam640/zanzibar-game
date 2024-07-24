@@ -22,12 +22,14 @@ function App() {
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
   const [winnerMessage, setWinnerMessage] = useState("");
+  const [tokensMessage, setTokensMessage] = useState("");
   // TODO: add feature for user to specify starting tokens
   const [userTokens, setUserTokens] = useState(10);
   const [compTokens, setCompTokens] = useState(10);
   const [userScore, setUserScore] = useState(0);
   const [compScore, setCompScore] = useState(0);
-  const [tokensExchanged, setTokensExchanged] = useState(0);
+  const [userTokensExchanged, setUserTokensExchanged] = useState(0);
+  const [compTokensExchanged, setCompTokensExchanged] = useState(0);
   const [showRollButton, setShowRollButton] = useState(true);
   const [showConButton, setShowConButton] = useState(false);
   const [showEndButton, setShowEndButton] = useState(false);
@@ -72,7 +74,7 @@ function App() {
 
       setScore(score);
       setMessage(message);
-      setTokensExchanged(tokensExchanged);
+      setUserTokensExchanged(tokensExchanged);
       setUserScore(score);
       console.log('Data sent:', response.data);
 
@@ -90,7 +92,7 @@ function App() {
 
       setScore(score);
       setMessage(message);
-      setTokensExchanged(tokensExchanged);
+      setCompTokensExchanged(tokensExchanged);
       setCompScore(score);
       console.log('Data sent:', response.data);
 
@@ -103,11 +105,19 @@ function App() {
     try {
       const response = await axios.post('http://localhost:8080/get-round-winner', {
         userScore: userScore,
-        compScore: compScore
+        compScore: compScore,
+        userTokens: userTokens,
+        compTokens: compTokens,
+        userTokensExchanged: userTokensExchanged,
+        compTokensExchanged: compTokensExchanged
       });
-      setWinnerMessage(response.data);
-      console.log('User score:', userScore);
-      console.log('Computer score:', compScore);
+      const [message1, message2, newUserTokens, newCompTokens] = response.data;
+      setWinnerMessage(message1);
+      setTokensMessage(message2);
+      setUserTokens(newUserTokens);
+      setCompTokens(newCompTokens);
+      setShowEndButton(false);
+      setShowRollButton(true);
       console.log('Data sent:', response.data);
 
     } catch (error) {
@@ -135,10 +145,11 @@ function App() {
       {showEndButton && (
         <Button onClick={endRound} style={{top: "80%", right: "50%", position: "absolute"}}>End Round</Button>
       )}
-      <p style={{top: "15%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{winnerMessage}</p>
+      <p style={{top: "10%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{winnerMessage}</p>
+      <p style={{top: "15%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensMessage}</p>
       <p style={{top: "20%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{score}</p>
       <p style={{top: "25%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{message}</p>
-      <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensExchanged} tokens</p>
+      {/* <p style={{top: "30%", right: "50%", position: "absolute", fontSize: "1.5em", color: "white"}}>{tokensExchanged} tokens</p> */}
     </div>
   );
 }

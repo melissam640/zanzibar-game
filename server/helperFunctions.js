@@ -44,14 +44,25 @@ const getTotalScore = (diceValues) => {
   return [score, tokensExchanged, message];
 }
 
-const getRoundWinner = (userScore, compScore) => {
+const getRoundWinner = (userScore, compScore, userTokens, compTokens, userTokensExchanged, compTokensExchanged) => {
+  let winnerMessage, tokensMessage, newUserTokens, newCompTokens;
   if (userScore > compScore) {
-    return ('User wins round.');
+    winnerMessage = 'You win the round!';
+    tokensMessage = `You give the computer ${userTokensExchanged} tokens.`;
+    newUserTokens = userTokens - userTokensExchanged;
+    newCompTokens = compTokens + userTokensExchanged;
   } else if (compScore > userScore) {
-    return ('Computer wins round.');
+    winnerMessage = 'The computer wins the round.';
+    tokensMessage = `The computer gives you ${compTokensExchanged} tokens.`;
+    newUserTokens = userTokens + compTokensExchanged;
+    newCompTokens = compTokens - compTokensExchanged;
   } else {
-    return (`It's a TimeRanges.`);
+    winnerMessage = `It's a tie!`;
+    tokensMessage = 'There are no tokens exchanged.';
+    newUserTokens = userTokens;
+    newCompTokens = compTokens;
   }
+  return([winnerMessage, tokensMessage, newUserTokens, newCompTokens]);
 }
 
 module.exports = {
