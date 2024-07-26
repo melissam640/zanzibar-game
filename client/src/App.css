@@ -1,3 +1,20 @@
 .App {
   text-align: center;
 }
+
+.Game-button {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: auto;
+}
+
+.Message {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: auto;
+  color: white;
+}
