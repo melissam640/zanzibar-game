@@ -1,6 +1,6 @@
 //App.js
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import './App.css';
@@ -120,6 +120,31 @@ function App() {
     } catch (error) {
       console.error("Error sending data:", error);
     }
+  }
+
+  useEffect(() => {
+    if (userTokens <= 0 || compTokens <= 0) {
+      endGame();
+    }
+  }, [userTokens, compTokens]);
+  
+  const endGame = () => {
+    const winner = userTokens > 0 ? "The computer wins!" : "You win!";
+    setRoundInfo(winner);
+    setMessage("Game over. Resetting the game...");
+    setTimeout(resetGame, 3000); // Wait 3 seconds before resetting
+  }
+  
+  const resetGame = () => {
+    setUserTokens(10);
+    setCompTokens(10);
+    setScore(0);
+    setUserScore(0);
+    setCompScore(0);
+    setUserTokensExchanged(0);
+    setCompTokensExchanged(0);
+    setRoundInfo("Your Turn");
+    setMessage("Click Roll Dice");
   }
 
   return (
