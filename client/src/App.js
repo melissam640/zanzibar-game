@@ -1,47 +1,35 @@
 //App.js
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import './App.css';
+import { useGame } from './GameContext';
 import Header from './components/Header.js';
 import ScoreBoard from './components/ScoreBoard.js';
 import Dice from './components/Dice.js';
 
-//data will be the string we send from our server
+// TODO: Update url to be dynamic
 const apiCall = () => {
   axios.get('http://localhost:8080').then((data) => {
-    //this console.log will be in our frontend console
     console.log(data)
   })
 }
 
 function App() {
-  const [diceDisplay, setDiceDisplay] = useState("none");
-  const [diceValues, setDiceValues] = useState([1, 1, 1]);
-  const [score, setScore] = useState(0);
-  const [roundInfo, setRoundInfo] = useState("Your Turn");
-  const [message, setMessage] = useState("Click Roll Dice");
-  // TODO: add feature for user to specify starting tokens
-  const [userTokens, setUserTokens] = useState(10);
-  const [compTokens, setCompTokens] = useState(10);
-  const [userScore, setUserScore] = useState(0);
-  const [compScore, setCompScore] = useState(0);
-  const [userTokensExchanged, setUserTokensExchanged] = useState(0);
-  const [compTokensExchanged, setCompTokensExchanged] = useState(0);
-  const [showRollButton, setShowRollButton] = useState(true);
-  const [showConButton, setShowConButton] = useState(false);
-  const [showEndButton, setShowEndButton] = useState(false);
+  const { state, dispatch } = useGame();
   
   const rollDice = async () => {
     try {
       const response = await axios.get("http://localhost:8080/roll-dice");
-      setDiceValues(response.data);
-      setDiceDisplay("");
+      dispatch({
+				type: 'ROLL_DICE',
+				payload: {
+					diceValues: response.data
+				},
+			});
 
-      setShowRollButton(false);
-      setShowConButton(true);
-      setRoundInfo("Your Turn");
+      // TODO: Maybe move this getScore function to the server
       getScore(response.data);
 
     } catch (error) {
@@ -52,11 +40,14 @@ function App() {
   const computerRoll = async () => {
     try {
       const response = await axios.get("http://localhost:8080/roll-dice");
-      setDiceValues(response.data);
-      console.log("Computer roll button triggered", response.data);
+      dispatch({
+				type: 'COMPUTER_ROLL',
+				payload: {
+					diceValues: response.data
+				},
+			});
 
-      setShowConButton(false);
-      setShowEndButton(true);
+      // TODO: Maybe move this getCompScore function to the server
       getCompScore(response.data);
 
     } catch (error) {
@@ -71,10 +62,14 @@ function App() {
       });
       const [score, tokensExchanged, message] = response.data;
 
-      setScore(score);
-      setMessage(message);
-      setUserTokensExchanged(tokensExchanged);
-      setUserScore(score);
+      dispatch({
+				type: 'GET_SCORE',
+				payload: {
+					score: score,
+					tokensExchanged: tokensExchanged,
+					message: message
+				},
+			});
 
     } catch (error) {
       console.error("Error sending data:", error);
@@ -88,11 +83,14 @@ function App() {
       });
       const [score, tokensExchanged, message] = response.data;
 
-      setScore(score);
-      setRoundInfo("Computer's Turn")
-      setMessage(message);
-      setCompTokensExchanged(tokensExchanged);
-      setCompScore(score);
+      dispatch({
+				type: 'GET_COMP_SCORE',
+				payload: {
+					score: score,
+					tokensExchanged: tokensExchanged,
+					message: message
+				},
+			});
 
     } catch (error) {
       console.error("Error sending data:", error);
@@ -102,20 +100,24 @@ function App() {
   const endRound = async () => {
     try {
       const response = await axios.post("http://localhost:8080/get-round-winner", {
-        userScore: userScore,
-        compScore: compScore,
-        userTokens: userTokens,
-        compTokens: compTokens,
-        userTokensExchanged: userTokensExchanged,
-        compTokensExchanged: compTokensExchanged
+        userScore: state.userScore,
+				compScore: state.compScore,
+				userTokens: state.userTokens,
+				compTokens: state.compTokens,
+				userTokensExchanged: state.userTokensExchanged,
+				compTokensExchanged: state.compTokensExchanged
       });
       const [message1, message2, newUserTokens, newCompTokens] = response.data;
-      setRoundInfo(message1);
-      setMessage(message2);
-      setUserTokens(newUserTokens);
-      setCompTokens(newCompTokens);
-      setShowEndButton(false);
-      setShowRollButton(true);
+
+      dispatch({
+				type: 'END_ROUND',
+				payload: {
+					roundInfo: message1,
+					message: message2,
+					newUserTokens: newUserTokens,
+					newCompTokens: newCompTokens
+				},
+			});
 
     } catch (error) {
       console.error("Error sending data:", error);
@@ -123,52 +125,47 @@ function App() {
   }
 
   useEffect(() => {
-    if (userTokens <= 0 || compTokens <= 0) {
+    if (state.userTokens <= 0 || state.compTokens <= 0) {
       endGame();
     }
-  }, [userTokens, compTokens]);
+  }, [state.userTokens, state.compTokens]);
   
   const endGame = () => {
-    const winner = userTokens > 0 ? "The computer wins!" : "You win!";
-    setRoundInfo(winner);
-    setMessage("Game over. Resetting the game...");
+    dispatch({
+			type: 'END_GAME',
+			payload: {
+				roundInfo: state.userTokens > 0 ? "You win!" : "The computer wins!"
+			},
+		});
     setTimeout(resetGame, 3000); // Wait 3 seconds before resetting
   }
   
   const resetGame = () => {
-    setUserTokens(10);
-    setCompTokens(10);
-    setScore(0);
-    setUserScore(0);
-    setCompScore(0);
-    setUserTokensExchanged(0);
-    setCompTokensExchanged(0);
-    setRoundInfo("Your Turn");
-    setMessage("Click Roll Dice");
+    dispatch({ type: 'RESET_GAME' });
   }
 
   return (
     <div className="App">
       <Header />
-      <ScoreBoard compTokens={compTokens} userTokens={userTokens} />
+      <ScoreBoard compTokens={ state.compTokens } userTokens={ state.userTokens } />
       <div className="Message">
-        <h2>{ roundInfo }</h2>
-        <h3>{ message }</h3>
+        <h2>{ state.roundInfo }</h2>
+        <h3>{ state.message }</h3>
       </div>
       <Dice
-        dieValue1={diceValues[0]}
-        dieValue2={diceValues[1]}
-        dieValue3={diceValues[2]}
-        style={{display: diceDisplay}}
+        dieValue1={ state.diceValues[0] }
+        dieValue2={ state.diceValues[1] }
+        dieValue3={ state.diceValues[2] }
+        style={{display: state.diceDisplay}}
       />
       <div className="button-container">
-        {showRollButton && (
+        {state.showRollButton && (
           <Button onClick={rollDice}>Roll Dice</Button>
         )}
-        {showConButton && (
+        {state.showConButton && (
           <Button onClick={computerRoll}>Continue</Button>
         )}
-        {showEndButton && (
+        {state.showEndButton && (
           <Button onClick={endRound}>End Round</Button>
         )} 
       </div>
