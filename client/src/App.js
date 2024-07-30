@@ -161,15 +161,17 @@ function App() {
         dieValue3={diceValues[2]}
         style={{display: diceDisplay}}
       />
-      {showRollButton && (
-        <Button onClick={rollDice} className='Game-button'>Roll Dice</Button>
-      )}
-      {showConButton && (
-        <Button onClick={computerRoll} className='Game-button'>Continue</Button>
-      )}
-      {showEndButton && (
-        <Button onClick={endRound} className='Game-button'>End Round</Button>
-      )}
+      <div className="button-container">
+        {showRollButton && (
+          <Button onClick={rollDice}>Roll Dice</Button>
+        )}
+        {showConButton && (
+          <Button onClick={computerRoll}>Continue</Button>
+        )}
+        {showEndButton && (
+          <Button onClick={endRound}>End Round</Button>
+        )} 
+      </div>
     </div>
   );
 }
