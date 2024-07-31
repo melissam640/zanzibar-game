@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 import './App.css';
 import { useGame } from './GameContext';
 import Header from './components/Header.js';
@@ -107,13 +109,16 @@ function App() {
       {/* TODO: Review these buttons to see if this can be more concise */}
       <div className="button-container">
         {state.showRollButton && (
-          <Button onClick={userRoll}>Roll Dice</Button>
+          // <Button onClick={userRoll}>Roll Dice</Button>
+          <AwesomeButton onPress={userRoll} type="primary">Roll Dice</AwesomeButton>
         )}
         {state.showConButton && (
-          <Button onClick={computerRoll}>Continue</Button>
+          // <Button onClick={computerRoll}>Continue</Button>
+          <AwesomeButton onPress={computerRoll} type="primary">Continue</AwesomeButton>
         )}
         {state.showEndButton && (
-          <Button onClick={endRound}>End Round</Button>
+          // <Button onClick={endRound}>End Round</Button>
+          <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
         )} 
       </div>
     </div>
