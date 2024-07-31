@@ -18,111 +18,6 @@ const apiCall = () => {
 
 function App() {
   const { state, dispatch } = useGame();
-  
-  const rollDice = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/roll-dice");
-      dispatch({
-				type: 'ROLL_DICE',
-				payload: {
-					diceValues: response.data
-				},
-			});
-
-      // TODO: Maybe move this getScore function to the server
-      getScore(response.data);
-
-    } catch (error) {
-      console.error("Error rolling dice:", error);
-    }
-  }
-
-  const computerRoll = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/roll-dice");
-      dispatch({
-				type: 'COMPUTER_ROLL',
-				payload: {
-					diceValues: response.data
-				},
-			});
-
-      // TODO: Maybe move this getCompScore function to the server
-      getCompScore(response.data);
-
-    } catch (error) {
-      console.error("Error rolling dice:", error);
-    }
-  }
-
-  const getScore = async (values) => {
-    try {
-      const response = await axios.post("http://localhost:8080/get-score", {
-        data: values
-      });
-      const [score, tokensExchanged, message] = response.data;
-
-      dispatch({
-				type: 'GET_SCORE',
-				payload: {
-					score: score,
-					tokensExchanged: tokensExchanged,
-					message: message
-				},
-			});
-
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  }
-
-  const getCompScore = async (values) => {
-    try {
-      const response = await axios.post("http://localhost:8080/get-score", {
-        data: values
-      });
-      const [score, tokensExchanged, message] = response.data;
-
-      dispatch({
-				type: 'GET_COMP_SCORE',
-				payload: {
-					score: score,
-					tokensExchanged: tokensExchanged,
-					message: message
-				},
-			});
-
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  }
-
-  const endRound = async () => {
-    try {
-      const response = await axios.post("http://localhost:8080/get-round-winner", {
-        userScore: state.userScore,
-				compScore: state.compScore,
-				userTokens: state.userTokens,
-				compTokens: state.compTokens,
-				userTokensExchanged: state.userTokensExchanged,
-				compTokensExchanged: state.compTokensExchanged
-      });
-      const [message1, message2, newUserTokens, newCompTokens] = response.data;
-
-      dispatch({
-				type: 'END_ROUND',
-				payload: {
-					roundInfo: message1,
-					message: message2,
-					newUserTokens: newUserTokens,
-					newCompTokens: newCompTokens
-				},
-			});
-
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  }
 
   useEffect(() => {
     if (state.userTokens <= 0 || state.compTokens <= 0) {
@@ -130,14 +25,65 @@ function App() {
     }
   }, [state.userTokens, state.compTokens]);
   
+  const userRoll = async () => {
+    const response = await axios.get("http://localhost:8080/roll-dice");
+    const [diceValues, score, tokensExchanged, message] = response.data;
+    dispatch({
+      type: 'USER_ROLL',
+      payload: {
+        diceValues: diceValues,
+        score: score,
+        tokensExchanged: tokensExchanged,
+        message: message
+      },
+    });
+  }
+
+  const computerRoll = async () => {
+    const response = await axios.get("http://localhost:8080/roll-dice");
+    const [diceValues, score, tokensExchanged, message] = response.data;
+    dispatch({
+      type: 'COMPUTER_ROLL',
+      payload: {
+        diceValues: diceValues,
+        score: score,
+        tokensExchanged: tokensExchanged,
+        message: message
+      },
+    });
+  }
+
+  // TODO: Review this route to see if this can be more concise
+  const endRound = async () => {
+    const response = await axios.post("http://localhost:8080/get-round-winner", {
+      userScore: state.userScore,
+      compScore: state.compScore,
+      userTokens: state.userTokens,
+      compTokens: state.compTokens,
+      userTokensExchanged: state.userTokensExchanged,
+      compTokensExchanged: state.compTokensExchanged
+    });
+    const [message1, message2, newUserTokens, newCompTokens] = response.data;
+
+    dispatch({
+      type: 'END_ROUND',
+      payload: {
+        roundInfo: message1,
+        message: message2,
+        newUserTokens: newUserTokens,
+        newCompTokens: newCompTokens
+      },
+    });
+  }
+  
   const endGame = () => {
     dispatch({
 			type: 'END_GAME',
 			payload: {
-				roundInfo: state.userTokens > 0 ? "You win!" : "The computer wins!"
+				roundInfo: state.userTokens > 0 ? "The computer wins!" : "You win!"
 			},
 		});
-    setTimeout(resetGame, 3000); // Wait 3 seconds before resetting
+    setTimeout(resetGame, 3000);
   }
   
   const resetGame = () => {
@@ -158,9 +104,10 @@ function App() {
         dieValue3={ state.diceValues[2] }
         style={{display: state.diceDisplay}}
       />
+      {/* TODO: Review these buttons to see if this can be more concise */}
       <div className="button-container">
         {state.showRollButton && (
-          <Button onClick={rollDice}>Roll Dice</Button>
+          <Button onClick={userRoll}>Roll Dice</Button>
         )}
         {state.showConButton && (
           <Button onClick={computerRoll}>Continue</Button>

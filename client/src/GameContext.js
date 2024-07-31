@@ -6,8 +6,8 @@ const initialState = {
   score: 0,
   roundInfo: "Your Turn",
   message: "Click Roll Dice",
-  userTokens: 10,
-  compTokens: 10,
+  userTokens: 5,
+  compTokens: 5,
   userScore: 0,
   compScore: 0,
   userTokensExchanged: 0,
@@ -19,13 +19,18 @@ const initialState = {
 
 const gameReducer = (state, action) => {
   switch (action.type) {
-    case 'ROLL_DICE':
+    case 'USER_ROLL':
       return {
         ...state,
         diceValues: action.payload.diceValues,
         diceDisplay: "",
         showRollButton: false,
         showConButton: true,
+        score: action.payload.score,
+        roundInfo: "Your Turn",
+        message: action.payload.message,
+        userTokensExchanged: action.payload.tokensExchanged,
+        userScore: action.payload.score,
       };
     case 'COMPUTER_ROLL':
       return {
@@ -33,18 +38,6 @@ const gameReducer = (state, action) => {
         diceValues: action.payload.diceValues,
         showConButton: false,
         showEndButton: true,
-      };
-    case 'GET_SCORE':
-      return {
-        ...state,
-        score: action.payload.score,
-        message: action.payload.message,
-        userTokensExchanged: action.payload.tokensExchanged,
-        userScore: action.payload.score,
-      };
-    case 'GET_COMP_SCORE':
-      return {
-        ...state,
         score: action.payload.score,
         roundInfo: "Computer's Turn",
         message: action.payload.message,
@@ -70,8 +63,8 @@ const gameReducer = (state, action) => {
     case 'RESET_GAME':
       return {
         ...state,
-        userTokens: 10,
-        compTokens: 10,
+        userTokens: 5,
+        compTokens: 5,
         score: 0,
         userScore: 0,
         compScore: 0,

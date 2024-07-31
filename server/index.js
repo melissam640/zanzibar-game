@@ -13,16 +13,8 @@ app.get('/', (req, res) => {
 
 app.get('/roll-dice', (req, res) => {
   const diceResults = rollDice();
-  console.log(diceResults);
-  res.json(diceResults);
-});
-
-app.post('/get-score', (req, res) => {
-  const { data } = req.body;
-  console.log(data);
-  const roundScore = getTotalScore(data);
-  console.log(roundScore);
-  res.json(roundScore);
+  const [score, tokensExchanged, message] = getTotalScore(diceResults);
+  res.json([diceResults, score, tokensExchanged, message]);
 });
 
 app.post('/get-round-winner', (req, res) => {
