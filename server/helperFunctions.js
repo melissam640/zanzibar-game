@@ -35,7 +35,7 @@ const getTotalScore = (diceValues) => {
   } else if (diceValues.includes(1) && diceValues.includes(2) && diceValues.includes(3)) {
     score = 1000;
     tokensExchanged = 2;
-    message = 'This is a special combination!';
+    message = 'This is a special combination worth 1000 points!';
   } else {
     score = getPointValue(diceValues[0]) + getPointValue(diceValues[1]) + getPointValue(diceValues[2]);
     tokensExchanged = 1;
@@ -52,7 +52,7 @@ const getRoundWinner = (userScore, compScore, userTokens, compTokens, userTokens
     newUserTokens = userTokens - userTokensExchanged;
     newCompTokens = compTokens + userTokensExchanged;
   } else if (compScore > userScore) {
-    winnerMessage = 'The computer wins the round.';
+    winnerMessage = 'Computer wins the round!';
     tokensMessage = `The computer gives you ${compTokensExchanged} tokens.`;
     newUserTokens = userTokens + compTokensExchanged;
     newCompTokens = compTokens - compTokensExchanged;
