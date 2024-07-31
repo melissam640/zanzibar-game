@@ -20,6 +20,19 @@
   border-radius: 5%;
 }
 
+.Player-title {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: lightgoldenrodyellow;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.Tokens {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: lightgoldenrodyellow;
+  font-size: 1.5em;
+}
+
 .Right {
   float: right;
 }

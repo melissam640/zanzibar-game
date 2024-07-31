@@ -15,7 +15,17 @@
   left: 50%;
   transform: translateX(-50%);
   overflow: auto;
-  color: white;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: lightgoldenrodyellow;
+  font-weight: bold;
+}
+
+.Message h2 {
+  font-size: 2.5em;
+}
+
+.Message h3 {
+  font-size: 1.5em;
 }
 
 .aws-btn {
@@ -26,28 +36,10 @@
   --button-raise-level: 5px;
   --button-hover-pressure: 2;
   --transform-speed: 0.185s;
-  --button-primary-color: #aad3ea;
-  --button-primary-color-dark: #57a9d4;
-  --button-primary-color-light: #2875a0;
-  --button-primary-color-hover: #96c8e5;
-  --button-primary-color-active: #81bee0;
-  --button-primary-border: 2px solid #57a9d4;
-  --button-secondary-color: #fafafa;
-  --button-secondary-color-dark: #349890;
-  --button-secondary-color-light: #1a4c48;
-  --button-secondary-color-hover: #ecf9f8;
-  --button-secondary-color-active: #c6ece9;
-  --button-secondary-border: 2px solid #b3e5e1;
-  --button-anchor-color: #95d44a;
-  --button-anchor-color-dark: #52a934;
-  --button-anchor-color-light: #3f8228;
-  --button-anchor-color-hover: #89cf35;
-  --button-anchor-color-active: #7cbe2d;
-  --button-anchor-border: 2px solid #5bbd3a;
-  --button-danger-color: #8b3357;
-  --button-danger-color-dark: #531849;
-  --button-danger-color-light: #ffffff;
-  --button-danger-color-hover: #843052;
-  --button-danger-color-active: #782c4b;
-  --button-danger-border: 2px solid #531849;
+  --button-primary-color: #88572b;
+  --button-primary-color-dark: #95653c;
+  --button-primary-color-light: #FAFAD6;
+  --button-primary-color-hover: #cea175;
+  --button-primary-color-active: #C99561;
+  --button-primary-border: 2px solid #d1925b;
 }

@@ -6,23 +6,21 @@ const ScoreBoard = (props) => {
         <div className="Score-board-frame Right">
           <div className="Score-board">
             <h2 className="Player-title">
-              Computer
+              COMPUTER
             </h2>
             <p className="Tokens">
-              {props.compTokens}
+              {props.compTokens} Tokens
             </p>
-            <h3>Tokens</h3>
           </div>
         </div>
         <div className="Score-board-frame Left">
         <div className="Score-board">
           <h2 className="Player-title">
-            You
+            YOU
           </h2>
           <p className="Tokens">
-            {props.userTokens}
+            {props.userTokens} Tokens
           </p>
-          <h3>Tokens</h3>
         </div>
       </div>
     </div>
