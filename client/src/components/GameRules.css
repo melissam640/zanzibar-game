@@ -1,0 +1,15 @@
+.rules-modal {
+  background-color: rgb(133, 76, 29);
+  border-style: groove;
+  border-width: 0.5em;
+  border-color: #cea175;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: lightgoldenrodyellow;
+  white-space: pre;
+  font-size: 1.5em;
+}
+
+.rules-title {
+  text-align: center;
+  font-weight: bold;
+}
