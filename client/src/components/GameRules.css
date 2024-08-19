@@ -5,11 +5,11 @@
   border-color: #cea175;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: lightgoldenrodyellow;
+  text-align: center;
   white-space: pre;
   font-size: 1.5em;
 }
 
 .rules-title {
-  text-align: center;
   font-weight: bold;
 }
