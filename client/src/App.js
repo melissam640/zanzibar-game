@@ -7,6 +7,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import './App.css';
 import { useGame } from './GameContext';
+import GameRules from './components/GameRules.js';
 import Header from './components/Header.js';
 import ScoreBoard from './components/ScoreBoard.js';
 import Dice from './components/Dice.js';
@@ -121,6 +122,7 @@ function App() {
           <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
         )} 
       </div>
+      <GameRules />
     </div>
   );
 }
