@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 import './GameRules.css';
 
 function GameRules() {
   const [show, setShow] = useState(true);
 
   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
+  const handleShow = () => setShow(true); // TODO: Fix state
 
   const rules = `
   Roll the dice to try to get the higher score and get rid of your tokens.
@@ -46,9 +47,9 @@ function GameRules() {
           <hr/>
           {scoring}
           <hr/>
-          <Button variant="primary" onClick={handleClose}>
+          <AwesomeButton onPress={handleClose} type="primary">
             Got It!
-          </Button>
+          </AwesomeButton>
         </Modal.Body>
       </Modal>
     </>
