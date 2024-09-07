@@ -15,6 +15,7 @@ const initialState = {
   showRollButton: true,
   showConButton: false,
   showEndButton: false,
+  showRules: false,
 };
 
 const gameReducer = (state, action) => {
@@ -73,6 +74,11 @@ const gameReducer = (state, action) => {
         roundInfo: "Your Turn",
         message: "Click Roll Dice",
       };
+    case 'OPEN_RULES':
+      return {
+        ...state,
+        showRules: true,
+      };  
     default:
       return state;
   }

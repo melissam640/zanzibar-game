@@ -94,9 +94,16 @@ function App() {
     dispatch({ type: 'RESET_GAME' });
   }
 
+  const openRules = () => {
+    dispatch({ type: 'OPEN_RULES' });
+  }
+
   return (
     <div className="App">
       <Header />
+      <AwesomeButton onPress={openRules} type="primary" className="rules-button">
+        Rules
+      </AwesomeButton>
       <ScoreBoard compTokens={ state.compTokens } userTokens={ state.userTokens } />
       <div className="Message">
         <h2>{ state.roundInfo }</h2>
@@ -121,9 +128,9 @@ function App() {
         {state.showEndButton && (
           // <Button onClick={endRound}>End Round</Button>
           <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
-        )} 
+        )}
       </div>
-      <GameRules />
+      <GameRules show={state.showRules} />
     </div>
   );
 }

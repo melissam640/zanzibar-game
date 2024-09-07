@@ -4,11 +4,11 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import './GameRules.css';
 
-function GameRules() {
-  const [show, setShow] = useState(true);
+const GameRules = (props) => {
+//   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); // TODO: Fix state
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
 
   const rules = `
   Roll the dice to try to get the higher score and get rid of your tokens.
@@ -38,16 +38,18 @@ function GameRules() {
     <>
       {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button> */}
+      </Button>
+      onHide={handleClose}
+      onPress={handleClose} */}
 
-      <Modal show={show} onHide={handleClose} size="lg">
+      <Modal show={props.show} size="lg">
         <Modal.Body className="rules-modal">
           <h2 className="rules-title">Zanzibar Dice Game</h2>
           {rules}
           <hr/>
           {scoring}
           <hr/>
-          <AwesomeButton onPress={handleClose} type="primary">
+          <AwesomeButton type="primary">
             Got It!
           </AwesomeButton>
         </Modal.Body>

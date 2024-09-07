@@ -12,9 +12,9 @@ const Header = () => {
     return (
       <div className="header">
         <h1>ZANZIBAR</h1>
-        <AwesomeButton onPress={handleShow} type="primary" className="rules-button">
+        {/* <AwesomeButton onPress={handleShow} type="primary" className="rules-button">
           Rules
-        </AwesomeButton>
+        </AwesomeButton> */}
       </div>
     );
   }
