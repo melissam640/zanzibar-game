@@ -78,7 +78,12 @@ const gameReducer = (state, action) => {
       return {
         ...state,
         showRules: true,
-      };  
+      };
+    case 'CLOSE_RULES':
+      return {
+        ...state,
+        showRules: false,
+      };
     default:
       return state;
   }

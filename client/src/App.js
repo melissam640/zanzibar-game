@@ -2,7 +2,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
 import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import './App.css';
@@ -98,6 +97,10 @@ function App() {
     dispatch({ type: 'OPEN_RULES' });
   }
 
+  const closeRules = () => {
+    dispatch({ type: 'CLOSE_RULES' });
+  }
+
   return (
     <div className="App">
       <Header />
@@ -130,7 +133,7 @@ function App() {
           <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
         )}
       </div>
-      <GameRules show={state.showRules} />
+      <GameRules show={state.showRules} close={closeRules} />
     </div>
   );
 }
