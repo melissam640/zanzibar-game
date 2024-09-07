@@ -52,6 +52,7 @@ const gameReducer = (state, action) => {
         message: action.payload.message,
         userTokens: action.payload.newUserTokens,
         compTokens: action.payload.newCompTokens,
+        diceDisplay: "none",
         showEndButton: false,
         showRollButton: true,
       };
