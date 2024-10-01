@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
+import { Fade } from 'react-awesome-reveal';
 import './App.css';
 import { useGame } from './GameContext';
 import GameRules from './components/GameRules.js';
@@ -107,32 +108,40 @@ function App() {
       <AwesomeButton onPress={openRules} type="primary" className="rules-button">
         Rules
       </AwesomeButton>
-      <ScoreBoard compTokens={ state.compTokens } userTokens={ state.userTokens } />
-      <div className="Message">
-        <h2>{ state.roundInfo }</h2>
-        <h3>{ state.message }</h3>
-      </div>
+      
+      <Fade>
+        <ScoreBoard compTokens={ state.compTokens } userTokens={ state.userTokens } />
+        <div className="Message">
+          <h2>{ state.roundInfo }</h2>
+          <h3>{ state.message }</h3>
+        </div>
+      </Fade>
+      
       <Dice
         dieValue1={ state.diceValues[0] }
         dieValue2={ state.diceValues[1] }
         dieValue3={ state.diceValues[2] }
         style={{display: state.diceDisplay}}
       />
+      
       {/* TODO: Review these buttons to see if this can be more concise */}
-      <div className="button-container">
-        {state.showRollButton && (
-          // <Button onClick={userRoll}>Roll Dice</Button>
-          <AwesomeButton onPress={userRoll} type="primary">Roll Dice</AwesomeButton>
-        )}
-        {state.showConButton && (
-          // <Button onClick={computerRoll}>Continue</Button>
-          <AwesomeButton onPress={computerRoll} type="primary">Continue</AwesomeButton>
-        )}
-        {state.showEndButton && (
-          // <Button onClick={endRound}>End Round</Button>
-          <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
-        )}
-      </div>
+      <Fade>
+        <div className="button-container">
+          {state.showRollButton && (
+            // <Button onClick={userRoll}>Roll Dice</Button>
+            <AwesomeButton onPress={userRoll} type="primary">Roll Dice</AwesomeButton>
+          )}
+          {state.showConButton && (
+            // <Button onClick={computerRoll}>Continue</Button>
+            <AwesomeButton onPress={computerRoll} type="primary">Continue</AwesomeButton>
+          )}
+          {state.showEndButton && (
+            // <Button onClick={endRound}>End Round</Button>
+            <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
+          )}
+        </div>
+      </Fade>
+
       <GameRules show={state.showRules} close={closeRules} />
     </div>
   );
