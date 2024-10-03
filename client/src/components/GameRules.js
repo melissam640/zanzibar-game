@@ -32,6 +32,7 @@ const GameRules = (props) => {
     <>
       <Modal show={props.show} size="lg">
         <Modal.Body className="rules-modal">
+          <button type="button" class="btn-close" onClick={props.close}></button>
           <h2 className="rules-title">Zanzibar Dice Game</h2>
           {rules}
           <hr/>

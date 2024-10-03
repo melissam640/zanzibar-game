@@ -10,6 +10,10 @@
   font-size: 1.5em;
 }
 
+.btn-close {
+  float: right;
+}
+
 .rules-title {
   font-weight: bold;
 }
