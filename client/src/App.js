@@ -29,6 +29,11 @@ function App() {
     }
   }, [state.userTokens, state.compTokens]);
   
+  const clickRollDice = () => {
+    dispatch({ type: 'CLICK_ROLL' });
+    setTimeout(userRoll, 1000);
+  }
+  
   const userRoll = async () => {
     const response = await axios.get("http://localhost:8080/roll-dice");
     const [diceValues, score, tokensExchanged, message] = response.data;
@@ -41,6 +46,11 @@ function App() {
         message: message
       },
     });
+  }
+
+  const clickContinue = () => {
+    dispatch({ type: 'CLICK_CONTINUE' });
+    setTimeout(computerRoll, 1000);
   }
 
   const computerRoll = async () => {
@@ -128,15 +138,12 @@ function App() {
       <Fade>
         <div className="button-container">
           {state.showRollButton && (
-            // <Button onClick={userRoll}>Roll Dice</Button>
-            <AwesomeButton onPress={userRoll} type="primary">Roll Dice</AwesomeButton>
+            <AwesomeButton onPress={clickRollDice} type="primary">Roll Dice</AwesomeButton>
           )}
           {state.showConButton && (
-            // <Button onClick={computerRoll}>Continue</Button>
-            <AwesomeButton onPress={computerRoll} type="primary">Continue</AwesomeButton>
+            <AwesomeButton onPress={clickContinue} type="primary">Continue</AwesomeButton>
           )}
           {state.showEndButton && (
-            // <Button onClick={endRound}>End Round</Button>
             <AwesomeButton onPress={endRound} type="primary">End Round</AwesomeButton>
           )}
         </div>

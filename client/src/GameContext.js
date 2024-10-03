@@ -20,6 +20,12 @@ const initialState = {
 
 const gameReducer = (state, action) => {
   switch (action.type) {
+    case 'CLICK_ROLL':
+      return {
+        ...state,
+        roundInfo: "Your Turn",
+        message: "Rolling dice...",
+      };
     case 'USER_ROLL':
       return {
         ...state,
@@ -33,10 +39,18 @@ const gameReducer = (state, action) => {
         userTokensExchanged: action.payload.tokensExchanged,
         userScore: action.payload.score,
       };
+    case 'CLICK_CONTINUE':
+      return {
+        ...state,
+        diceDisplay: "none",
+        roundInfo: "Computer's Turn",
+        message: "Rolling dice...",
+      };
     case 'COMPUTER_ROLL':
       return {
         ...state,
         diceValues: action.payload.diceValues,
+        diceDisplay: "",
         showConButton: false,
         showEndButton: true,
         score: action.payload.score,
