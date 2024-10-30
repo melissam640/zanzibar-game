@@ -3,20 +3,17 @@
 }
 
 .Score-board-frame {
-  background-image: url("../assets/wood-texture.jpg");
+  /* background-image: url("../assets/wood-texture.jpg"); */
+  background-color: rgb(133, 76, 29);
+  border-style: groove;
+  border-width: 0.5em;
+  border-color: #d1925b;
   height: 100%;
   width: 20%;
-  margin: 5%;
-  margin-top: 10%;
+  margin: 10%;
+  margin-top: 8%;
   padding: 1%;
-  border-radius: 5%;
-}
-
-.Score-board {
-  background-color: rgb(133, 76, 29);
-  height: 100%;
-  width: 100%;
-  padding: 5%;
+  padding-top: 2%;
   border-radius: 5%;
 }
 
