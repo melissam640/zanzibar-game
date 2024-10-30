@@ -25,9 +25,14 @@
 }
 
 .Tokens {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: lightgoldenrodyellow;
   font-size: 1.5em;
+  display: inline;
+}
+
+.Coin-icon {
+  height: 20%;
+  width: 20%;
 }
 
 .Right {
