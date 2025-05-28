@@ -19,8 +19,9 @@
   position: absolute;
   top: 20%;
   left: 50%;
+  width: 40%;
   transform: translateX(-50%);
-  overflow: auto;
+  overflow: hidden;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: lightgoldenrodyellow;
   font-weight: bold;
