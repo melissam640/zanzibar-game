@@ -3,7 +3,6 @@
 }
 
 .Score-board-frame {
-  /* background-image: url("../assets/wood-texture.jpg"); */
   background-color: rgb(133, 76, 29);
   border-style: groove;
   border-width: 0.5em;

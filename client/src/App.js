@@ -8,7 +8,6 @@ import { Fade } from 'react-awesome-reveal';
 import './App.css';
 import { useGame } from './GameContext';
 import GameRules from './components/GameRules.js';
-import GameButton from './components/GameButton.js';
 import Header from './components/Header.js';
 import ScoreBoard from './components/ScoreBoard.js';
 import Dice from './components/Dice.js';
