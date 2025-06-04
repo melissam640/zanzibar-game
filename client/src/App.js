@@ -12,13 +12,6 @@ import Header from './components/Header.js';
 import ScoreBoard from './components/ScoreBoard.js';
 import Dice from './components/Dice.js';
 
-// TODO: Update url to be dynamic
-const apiCall = () => {
-  axios.get('http://localhost:8080').then((data) => {
-    console.log(data)
-  })
-}
-
 function App() {
   const { state, dispatch } = useGame();
 
@@ -66,7 +59,6 @@ function App() {
     });
   }
 
-  // TODO: Review this route to see if this can be more concise
   const endRound = async () => {
     const response = await axios.post("http://localhost:8080/get-round-winner", {
       userScore: state.userScore,
@@ -133,7 +125,6 @@ function App() {
         style={{display: state.diceDisplay}}
       />
       
-      {/* TODO: Review these buttons to see if this can be more concise */}
       <Fade>
         <div className="button-container">
           {state.showRollButton && (

@@ -7,10 +7,6 @@ const { rollDice, getTotalScore, getRoundWinner } = require('./helperFunctions.j
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello from our server!')
-});
-
 app.get('/roll-dice', (req, res) => {
   const diceResults = rollDice();
   const [score, tokensExchanged, message] = getTotalScore(diceResults);
