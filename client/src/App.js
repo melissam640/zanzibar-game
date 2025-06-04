@@ -15,11 +15,11 @@ import Dice from './components/Dice.js';
 function App() {
   const { state, dispatch } = useGame();
 
-  useEffect(() => {
-    if (state.userTokens <= 0 || state.compTokens <= 0) {
-      endGame();
-    }
-  }, [state.userTokens, state.compTokens]);
+  // useEffect(() => {
+  //   if (state.userTokens <= 0 || state.compTokens <= 0) {
+  //     endGame();
+  //   }
+  // }, [state.userTokens, state.compTokens, endGame]);
   
   const clickRollDice = () => {
     dispatch({ type: 'CLICK_ROLL' });
@@ -90,6 +90,12 @@ function App() {
 		});
     setTimeout(resetGame, 3000);
   }
+
+  useEffect(() => {
+    if (state.userTokens <= 0 || state.compTokens <= 0) {
+      endGame();
+    }
+  }, [state.userTokens, state.compTokens, endGame]);
   
   const resetGame = () => {
     dispatch({ type: 'RESET_GAME' });
