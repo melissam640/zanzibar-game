@@ -11,7 +11,7 @@ const ScoreBoard = (props) => {
           <p className="Tokens">
             {props.compTokens}
           </p>
-          <img className="Coin-icon" src={coin} />
+          <img className="Coin-icon" src={coin} alt="coin" />
         </div>
         <div className="Score-board-frame Left">
           <h2 className="Player-title">
@@ -20,7 +20,7 @@ const ScoreBoard = (props) => {
           <p className="Tokens">
             {props.userTokens}
           </p>
-          <img className="Coin-icon" src={coin} />
+          <img className="Coin-icon" src={coin} alt="coin" />
       </div>
     </div>
     );
