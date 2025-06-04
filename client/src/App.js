@@ -27,7 +27,7 @@ function App() {
   }
   
   const userRoll = async () => {
-    const response = await axios.get("http://localhost:8080/roll-dice");
+    const response = await axios.get("https://zanzibar-game.onrender.com/roll-dice");
     const [diceValues, score, tokensExchanged, message] = response.data;
     dispatch({
       type: 'USER_ROLL',
@@ -46,7 +46,7 @@ function App() {
   }
 
   const computerRoll = async () => {
-    const response = await axios.get("http://localhost:8080/roll-dice");
+    const response = await axios.get("https://zanzibar-game.onrender.com/roll-dice");
     const [diceValues, score, tokensExchanged, message] = response.data;
     dispatch({
       type: 'COMPUTER_ROLL',
@@ -60,7 +60,7 @@ function App() {
   }
 
   const endRound = async () => {
-    const response = await axios.post("http://localhost:8080/get-round-winner", {
+    const response = await axios.post("https://zanzibar-game.onrender.com/get-round-winner", {
       userScore: state.userScore,
       compScore: state.compScore,
       userTokens: state.userTokens,
