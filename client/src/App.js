@@ -14,12 +14,6 @@ import Dice from './components/Dice.js';
 
 function App() {
   const { state, dispatch } = useGame();
-
-  // useEffect(() => {
-  //   if (state.userTokens <= 0 || state.compTokens <= 0) {
-  //     endGame();
-  //   }
-  // }, [state.userTokens, state.compTokens, endGame]);
   
   const clickRollDice = () => {
     dispatch({ type: 'CLICK_ROLL' });
@@ -95,7 +89,7 @@ function App() {
     if (state.userTokens <= 0 || state.compTokens <= 0) {
       endGame();
     }
-  }, [state.userTokens, state.compTokens, endGame]);
+  });
   
   const resetGame = () => {
     dispatch({ type: 'RESET_GAME' });
