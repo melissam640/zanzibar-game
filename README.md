@@ -42,7 +42,7 @@ First player to loose all of their tokens wins!
 | Category | Tech |
 | ------ | ------ |
 | Backend | Node.js, Express |
-| Frontend | React, HTML, CSS, Radix |
+| Frontend | React, HTML, CSS, BootStrap |
 
 ## Author
 
